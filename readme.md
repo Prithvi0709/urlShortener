@@ -1,3 +1,3 @@
 # URL Shortener
 
-A simple url shortener that runs on Rust
+A url shortener application using Rust programming language. 
