@@ -1,3 +1,4 @@
+
 #[macro_use]
 extern crate rocket;
 use dashmap::DashMap;
@@ -19,6 +20,7 @@ fn rocket() -> _ {
     rocket::build()
         .manage(DashMap::<u32, String>::new())
         .mount("/", routes![shorten, redirect])
+
         .mount(
             "/",
             if cfg!(debug_assertions) {
@@ -50,4 +52,5 @@ fn redirect(key: u32, state: &rocket::State<DashMap<u32, String>>) -> Result<roc
         .get(&key)
         .map(|url| rocket::response::Redirect::to(url.clone()))
         .ok_or(rocket::response::status::NotFound("Invalid or expired link!"))
+
 }
