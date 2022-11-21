@@ -245,7 +245,6 @@ name = "digest"
 version = "0.10.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8168378f4e5023e7218c89c891c0fd8ecdb5e5e4f18cb78f38cf245dd021e76f"
-
 dependencies = [
  "block-buffer",
  "crypto-common",
@@ -526,7 +525,6 @@ name = "indexmap"
 version = "1.9.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1885e79c1fc4b10f0e172c475f458b7f7b93061064d98c3293e98c5ba0c8b399"
-
 dependencies = [
  "autocfg",
  "hashbrown",
@@ -1032,11 +1030,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-
 version = "1.0.88"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8e8b3801309262e8184d9687fb697586833e939767aea0dda89f5a8e650e8bd7"
-
 dependencies = [
  "itoa",
  "ryu",
@@ -1190,11 +1186,9 @@ dependencies = [
 
 [[package]]
 name = "tokio"
-
 version = "1.22.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d76ce4a75fb488c605c54bf610f221cea8b0dafb53333c1a67e8ee199dcd2ae3"
-
 dependencies = [
  "autocfg",
  "bytes",
@@ -1378,7 +1372,6 @@ dependencies = [
 [[package]]
 name = "urlShortener"
 version = "0.2.0"
-
 dependencies = [
  "dashmap",
  "rand",
