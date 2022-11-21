@@ -1,29 +1,13 @@
-// mod mnemonic_generator;
-
-// fn main() {
-//     // println!("{}", mnemonic_generator::generate_random_string().unwrap_or(String::from("Err")));
-//     let string : Option<String> = mnemonic_generator::generate_random_string();
-//     match string {
-//         Some(s) => {
-//             println!("{}", s)
-//         },
-//         None => {
-//             println!("Err: String contains u");
-//         }
-//     }
-
-// }
-
 #[macro_use]
 extern crate rocket;
 use dashmap::DashMap;
 use rand::Rng;
-// use rocket::State;
 
-#[get("/index.html")]
-fn index() -> &'static str {
-    "<html> <h1 style=\"text-align: center;\">Welcome to the Mnemonic Generator!</h1> <p style=\"text-align: center;\">This is a simple web app that generates a random mnemonic.</p> <p style=\"text-align: center;\">To generate a mnemonic, go to <a href=\"/generate\">/generate</a>.</p> </html>"
-}
+
+// #[get("/")]
+// fn index() ->  &'static str {
+//     return "Welcome to Our thing!!"
+// }
 
 #[get("/favicon.ico")]
 fn img() -> &'static str {
@@ -34,11 +18,23 @@ fn img() -> &'static str {
 fn rocket() -> _ {
     rocket::build()
         .manage(DashMap::<u32, String>::new())
-        .mount("/", routes![index, img, shorten, redirect])
+        .mount("/", routes![shorten, redirect])
+        .mount(
+            "/",
+            if cfg!(debug_assertions) {
+                // debug mode, therefore serve relative to crate root
+                rocket::fs::FileServer::from(rocket::fs::relative!("html/"))
+            } else {
+                // dockerized, therefore serve from absolute path
+                rocket::fs::FileServer::from("html/")
+            },
+        )
 }
 
-#[post("/short?<url>")]
+#[get("/shorten?<url>")]
 fn shorten(url: String, state: &rocket::State<DashMap<u32, String>>) -> Result<String, rocket::response::status::BadRequest<&str>> {
+
+    println!( "URL: {}", url);
     if url.is_empty() {
         Err(rocket::response::status::BadRequest(Some("URL is empty!")))
     } else {
