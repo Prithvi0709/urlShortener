@@ -1,24 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>UrlShortner - ASP - Rust</title>
-    <style type="text/css">
-        body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: "Courier New", Courier, monospace;
-        }
-        a {
-            color: #ffffff;
-        }
-        </style>
-</head>
+  <title>Rust UrlShortner</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <body>
-        <h1>UrlShortner - ASP - Rust</h1>
-        <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET">
-            <input type="text" name="url" placeholder="Enter URL">
-            <input type="submit" value="Shorten">
-        </form>
-    </body>
+  <style>
+    .shorten_bar_main {
+        border-radius: 4px 0px 0px 4px;
+        font-size: 18px;
+        width:40%;
+        text-align: center;
+        font-family: "zantrokeregular";
+    }
+    .shorten_button_main {
+        border-radius: 2px 6px 6px 0px;
+        font-size: 18px;
+        padding: 3px;
+        box-shadow: none;
+        border: 1px solid rgb(163, 163, 163);
+        background-color: cornflowerblue;
+        color: rgb(255, 255, 255);
+        text-shadow: 1px 1px 1px rgb(104, 104, 104);
+        margin-left: -5px;
+        margin-top: -5px;
+
+    }
+    </style>
+    <script>
+        // Wait for the DOM to load
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var wage = document.getElementById("url_shtrn");
+            wage.addEventListener("keydown", function (e) {
+                if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+                    fetch_shorten();
+                }
+            });
+
+            function fetch_shorten() {
+                console.log("fetching shorten");
+                fetch('/shorten?url='+document.getElementById('url_shtrn').value+"&translation_type=1")
+                .then((response) => response.json())
+                .then((data) => {
+                    var j = getCurrentURL() + data;
+                    document.getElementById('final_url').href = j;
+                    document.getElementById('final_url').innerHTML = j;
+                    document.getElementById('url_disp_p').style.display = "block";
+                    
+                });
+                
+            }
+        })
+
+        function getCurrentURL () {
+            return window.location.href
+        }
+
+    </script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+
+    <h1>Rust Based Url Shortner</h1>
+    <h2>Quick Shorten</h2>
+    <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET" onsubmit="return false">
+        <input type="text" class="shorten_bar_main" name="url" id="url_shtrn" placeholder="Enter your url.." >
+        <!-- <input type="submit" class="shorten_button_main" value="Shorten" onclick="fetch_shorten()"> -->
+    </form>
+    <br>
+    <p id="url_disp_p" style="display: none;">
+        Success! Your Shortened Url is: 
+        <a id="final_url"></a>
+    </p>
+
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Features of our Shortner</h3>
+      <p>Best shortner in the world.</p> 
+      <p>It would be stupid to use any other.</p> 
+    </div>
+    <div class="col-sm-4">
+        <h3>Members</h3>
+        <p>Samad</p>
+        <p>Prithvi</p>
+        <p>Kiran</p>
+        <p> et al.</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>The George Washington University</h3>        
+      <p>Dept. of Computer Science</p>
+    </div>
+  </div>
+</div>
+
+</body>
 </html>
