@@ -41,7 +41,18 @@
             });
 
             function fetch_shorten() {
-                console.log("fetching shorten");
+                var url = document.getElementById("url_shtrn").value;
+
+                // Frontend checks for url integrity.
+                if (url == "") {
+                    alert("Please enter a valid URL");
+                    return;
+                }   
+                if (!url.includes(".")) {
+                    alert("Please enter a valid URL");
+                    return;
+                }
+
                 fetch('/shorten?url='+document.getElementById('url_shtrn').value+"&translation_type=1")
                 .then((response) => response.json())
                 .then((data) => {
