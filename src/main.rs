@@ -1,6 +1,6 @@
 /*
     Request Handler for the server.
-    Author(s): Prithvi <idk@gwu.edu> , Sam Ul Haque <sam.ulhaque@gwu.edu>
+    Author(s): Prithvi <prithvi_raj@gwu.edu> , Sam Ul Haque <sam.ulhaque@gwu.edu>
     Rust Group for ASP Fall 2022
 */
 
