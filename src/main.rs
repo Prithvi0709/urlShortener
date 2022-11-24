@@ -1,54 +1,59 @@
+/*
+    Request Handler for the server.
+    Author(s): Prithvi <idk@gwu.edu> , Sam Ul Haque <sam.ulhaque@gwu.edu>
+    Rust Group for ASP Fall 2022
+*/
 
 #[macro_use]
 extern crate rocket;
-use dashmap::DashMap;
-use rand::Rng;
 
-
-// #[get("/")]
-// fn index() ->  &'static str {
-//     return "Welcome to Our thing!!"
-// }
-
-#[get("/favicon.ico")]
-fn img() -> &'static str {
-    "Lochya!"
-}
 
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        .manage(DashMap::<u32, String>::new())
-        .mount("/", routes![shorten, redirect])
-
+        .manage(dashmap::DashMap::<u32, String>::new())
+        .mount("/", routes![
+            shorten,
+            redirect
+        ])
         .mount(
             "/",
-            if cfg!(debug_assertions) {
-                // debug mode, therefore serve relative to crate root
-                rocket::fs::FileServer::from(rocket::fs::relative!("html/"))
-            } else {
-                // dockerized, therefore serve from absolute path
-                rocket::fs::FileServer::from("html/")
-            },
+            rocket::fs::FileServer::from("static_content/")
         )
 }
 
 #[get("/shorten?<url>&<translation_type>")]
-fn shorten(url: String, translation_type : String, state: &rocket::State<DashMap<u32, String>>) -> Result<String, rocket::response::status::BadRequest<&str>> {
-    // TODO: Three translation types:
-    // 1. Random number (default)
-    // 2. Memonic TODO
-    // 3. Emoji   TODO
+fn shorten( 
+        url: String,
+        translation_type : String,
+        state: &rocket::State<dashmap::DashMap<u32, String>>
+    
+    ) -> Result<String, rocket::response::status::BadRequest<&str>> {
+
     println!( "URL: {}", url);
     if url.is_empty() {
         Err(rocket::response::status::BadRequest(Some("URL is empty!")))
     } else {
-        // Impliment type trigred url key change here.
-        let key: u32 = rand::thread_rng().gen();
-        state.insert(key, url);
-        // print out the key to the rocket console
-        println!("Key: {}", translation_type);
-        Ok(key.to_string())
+        if translation_type == "1" {
+            use rand::Rng;
+            let key: u32 = rand::thread_rng().gen();
+            state.insert(key, url);
+            Ok(key.to_string())
+        }
+
+        else if translation_type == "2" {
+            // TODO: Implement mnemonic return.
+            Err(rocket::response::status::BadRequest(Some("Memonic not implemented yet!")))
+        }
+
+        else if translation_type == "3" {
+            // TODO: Implement emoji return.
+            Err(rocket::response::status::BadRequest(Some("Emoji not implemented yet!")))
+        }
+
+        else {
+            Err(rocket::response::status::BadRequest(Some("Invalid translation type!")))
+        }
     }
 }
 
@@ -56,7 +61,8 @@ fn shorten(url: String, translation_type : String, state: &rocket::State<DashMap
 // Add Api for login and register, so that user can add a custom url
 
 #[get("/<key>")]
-fn redirect(key: u32, state: &rocket::State<DashMap<u32, String>>) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<&str>> {
+fn redirect(key: u32, state: &rocket::State<dashmap::DashMap<u32, String>>) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<&str>> {
+    // TODO: Implement click tracking here.
     state
         .get(&key)
         .map(|url| rocket::response::Redirect::to(url.clone()))
