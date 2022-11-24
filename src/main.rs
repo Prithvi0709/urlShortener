@@ -29,15 +29,17 @@ fn shorten(
         translation_type : String,
         state: &rocket::State<dashmap::DashMap<u32, String>>) -> Result<String, rocket::response::status::BadRequest<&str>> {
 
-    println!( "URL: {}", url);
     if url.is_empty() {
         Err(rocket::response::status::BadRequest(Some("URL is empty!")))
+    
     } else if url_validation::period_in_url(&url) == false {
-        print!("THERE IS A PERIOD IN THE URL");
         Err(rocket::response::status::BadRequest(Some("URL is invalid!")))
+    
     } else {
+        
         let url = url_validation::add_protocol(&url);
         println!("URL after adding protocol: {}", url);
+        
         if translation_type == "1" {
             use rand::Rng;
             let key: u32 = rand::thread_rng().gen();

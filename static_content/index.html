@@ -52,7 +52,7 @@
                     alert("Please enter a valid URL");
                     return;
                 }
-
+                // var translation_type = document.getElementById("translation_type").value;
                 fetch('/shorten?url='+document.getElementById('url_shtrn').value+"&translation_type=1")
                 .then((response) => response.json())
                 .then((data) => {
@@ -80,12 +80,14 @@
     <h2>Quick Shorten</h2>
     <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET" onsubmit="return false">
         <input type="text" class="shorten_bar_main" name="url" id="url_shtrn" placeholder="Enter your url.." >
-        <!-- <input type="submit" class="shorten_button_main" value="Shorten" onclick="fetch_shorten()"> -->
+
+
+
     </form>
     <br>
     <p id="url_disp_p" style="display: none;">
         Success! Your Shortened Url is: 
-        <a id="final_url"></a>
+        <a target="_blank" rel="noopener noreferrer" id="final_url"></a>
     </p>
 
 </div>
