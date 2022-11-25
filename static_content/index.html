@@ -11,6 +11,7 @@
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Teko">
       <link rel="stylesheet" href="index.css">
       <link rel="stylesheet" href="inputbox.css">
+      <link rel="stylesheet" href="radio-buttons.css">
       <script src="function.js"></script>
 
        
@@ -30,13 +31,48 @@
             <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET" onsubmit="return false">
                 <div class="form-radio">
                     <h3><b>Shorten type</b></h3>
+<!--
                     <input type="radio" id="1" name="shorten_type">
                     <label for="html">Random Number</label><br>
                     <input type="radio" id="2" name="shorten_type">
                     <label for="css">Mnemonic</label><br>
                     <input type="radio" id="3" name="shorten_type">
                     <label for="javascript">Emoji</label>
+-->
                 </div>
+                
+                	
+		
+		<div class="section over-hide z-bigger">
+			<div class="container pb-5">
+				<div class="row justify-content-center pb-5">
+					
+					<div class="col-12 pb-5">
+						<input class="checkbox-tools" type="radio" name="shorten_type" id="1">
+						<label class="for-checkbox-tools" for="1">
+							<i class='uil uil-line-alt'></i>
+							Number
+						</label><!--
+						--><input class="checkbox-tools" type="radio" name="shorten_type" id="2">
+						<label class="for-checkbox-tools" for="2">
+							<i class='uil uil-vector-square'></i>
+							Mnemonic
+						</label><!--
+						--><input class="checkbox-tools" type="radio" name="shorten_type" id="3">
+						<label class="for-checkbox-tools" for="3">
+							<i class='uil uil-ruler'></i>
+							Emoji
+						</label>
+					</div>
+				</div>
+			</div>	
+		</div>
+	
+		
+
+                
+                
+                
             
                 <div class="form-group">
                     <span>https://</span>
