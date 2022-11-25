@@ -18,10 +18,11 @@ html{
     font-family: "Rajdhani", sans-serif; 
 }
 .logo{
-    
+    width: 125px;
+    height: 100px;
 }
 .navbar-heading{
-    padding-left: 20px;
+    padding-left: 10px;
     font-size: 70px;
     
 }
