@@ -24,13 +24,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 var checkedOption = getCheckedRadio();
                 fetch('/shorten?url='+document.getElementById('url_shtrn').value+"&translation_type="+checkedOption)
-                .then((response) => response.json())
+                .then((response) => response.text())
                 .then((data) => {
                     var j = getCurrentURL() + data;
                     document.getElementById('final_url').href = j;
                     document.getElementById('final_url').innerHTML = j;
                     document.getElementById('url_disp_p').style.display = "block";
-                    
                 });
                 
             }

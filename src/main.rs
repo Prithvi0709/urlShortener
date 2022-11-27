@@ -12,7 +12,7 @@ mod url_validation;
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-        .manage(dashmap::DashMap::<u32, String>::new())
+        .manage(dashmap::DashMap::<String, String>::new())
         .mount("/", routes![
             shorten,
             redirect
@@ -27,7 +27,7 @@ fn rocket() -> _ {
 fn shorten( 
         url: String,
         translation_type : String,
-        state: &rocket::State<dashmap::DashMap<u32, String>>) -> Result<String, rocket::response::status::BadRequest<&str>> {
+        state: &rocket::State<dashmap::DashMap<String, String>>) -> Result<String, rocket::response::status::BadRequest<&str>> {
 
     if url.is_empty() {
         Err(rocket::response::status::BadRequest(Some("URL is empty!")))
@@ -39,11 +39,13 @@ fn shorten(
         
         let url = url_validation::add_protocol(&url);
         println!("URL after adding protocol: {}", url);
-        
+        // Key converted from u32 to string
+
         if translation_type == "1" {
             use rand::Rng;
             let key: u32 = rand::thread_rng().gen();
-            state.insert(key, url);
+            state.insert(key.to_string(), url);
+            println!("{}",key);
             Ok(key.to_string())
         }
 
@@ -55,18 +57,20 @@ fn shorten(
                                         "Festive".to_string(),"Elves".to_string(),"Ornaments".to_string(),
                                         "Presents".to_string(),"Snow".to_string(),"Holiday".to_string(),"Spirit".to_string()];
             
-            let mut key = "".to_string();
+            let mut key_gen = "".to_string();
 
             use rand::Rng;
             let num1: u32 = rand::thread_rng().gen_range(2..5);
             
             for i in 0..num1{
                 let num2: usize = rand::thread_rng().gen_range(0..10);
-                key.push_str(&theme[num2]);
+                key_gen.push_str(&theme[num2]);
             }
 
-            state.insert(key, url);
-            Ok(key)
+            // let key = key_gen;
+            println!("{}",key_gen);
+            state.insert(key_gen.clone(), url);
+            Ok(key_gen)
         }
 
         else if translation_type == "3" {
@@ -84,7 +88,7 @@ fn shorten(
 // Add Api for login and register, so that user can add a custom url
 
 #[get("/<key>")]
-fn redirect(key: u32, state: &rocket::State<dashmap::DashMap<u32, String>>) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<&str>> {
+fn redirect(key: String, state: &rocket::State<dashmap::DashMap<String, String>>) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<&str>> {
     // TODO: Implement click tracking here.
     state
         .get(&key)
