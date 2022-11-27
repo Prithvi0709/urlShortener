@@ -49,7 +49,24 @@ fn shorten(
 
         else if translation_type == "2" {
             // TODO: Implement mnemonic return.
-            Err(rocket::response::status::BadRequest(Some("Memonic not implemented yet!")))
+            // Here the key is a string. 
+            // TODO Implement a new Dashmap with <String, String> type
+            let theme: [String; 10] = ["Christmas".to_string(),"Santa".to_string(),"Feast".to_string(),
+                                        "Festive".to_string(),"Elves".to_string(),"Ornaments".to_string(),
+                                        "Presents".to_string(),"Snow".to_string(),"Holiday".to_string(),"Spirit".to_string()];
+            
+            let mut key = "".to_string();
+
+            use rand::Rng;
+            let num1: u32 = rand::thread_rng().gen_range(2..5);
+            
+            for i in 0..num1{
+                let num2: usize = rand::thread_rng().gen_range(0..10);
+                key.push_str(&theme[num2]);
+            }
+
+            state.insert(key, url);
+            Ok(key)
         }
 
         else if translation_type == "3" {
