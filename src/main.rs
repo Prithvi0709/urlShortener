@@ -53,19 +53,21 @@ fn shorten(
             // TODO: Implement mnemonic return.
             // Here the key is a string. 
             // TODO Implement a new Dashmap with <String, String> type
-            let theme: [String; 10] = ["Christmas".to_string(),"Santa".to_string(),"Feast".to_string(),
-                                        "Festive".to_string(),"Elves".to_string(),"Ornaments".to_string(),
-                                        "Presents".to_string(),"Snow".to_string(),"Holiday".to_string(),"Spirit".to_string()];
-            
-            let mut key_gen = "".to_string();
+            let person: [String; 6] = ["Santa ".to_string(),"The Elf ".to_string(),"Mr Snowman ".to_string(),
+                                        "The Gingerbreadman ".to_string(),"Scrooge ".to_string(),"Rudolph ".to_string()];
+            let connect: [String; 11] = ["was ".to_string(),"is ".to_string(),"likes ".to_string(),"hates ".to_string(),"prefers ".to_string(),
+                                         "has been ".to_string(),"will be ".to_string(),"adores ".to_string(),"enjoys ".to_string(),"loves ".to_string(),"dislikes ".to_string()];
+            let action: [String; 17] = ["cooking".to_string(),"singing".to_string(),"dancing".to_string(),"sleeping".to_string(),"celebrating".to_string(),
+                                        "surprising".to_string(),"writing".to_string(),"hoping".to_string(),"lying".to_string(),"listening".to_string(),"offering".to_string(),
+                                        "speaking".to_string(),"running".to_string(),"programming".to_string(),"snoring".to_string(),"entertaining".to_string(),"tickling".to_string()];
 
             use rand::Rng;
-            let num1: u32 = rand::thread_rng().gen_range(2..5);
+
+            let mut key_gen = "".to_string();
+            key_gen.push_str(&person[rand::thread_rng().gen_range(0..6)]);
+            key_gen.push_str(&connect[rand::thread_rng().gen_range(0..11)]);
+            key_gen.push_str(&action[rand::thread_rng().gen_range(0..17)]);
             
-            for i in 0..num1{
-                let num2: usize = rand::thread_rng().gen_range(0..10);
-                key_gen.push_str(&theme[num2]);
-            }
 
             // let key = key_gen;
             println!("{}",key_gen);
@@ -75,7 +77,25 @@ fn shorten(
 
         else if translation_type == "3" {
             // TODO: Implement emoji return.
-            Err(rocket::response::status::BadRequest(Some("Emoji not implemented yet!")))
+
+            let theme: [String; 10] = ["🙂".to_string(),"🔴".to_string(),"⚠️".to_string(),
+                                        "📌".to_string(),"😘".to_string(),"💙".to_string(),
+                                        "👽".to_string(),"👻".to_string(),"🐉".to_string(),"❤️‍🔥".to_string()];
+            
+            let mut key_gen = "".to_string();
+
+            use rand::Rng;
+            //🐼🦄
+            for _ in 0..10{
+                let num2: usize = rand::thread_rng().gen_range(0..10);
+                key_gen.push_str(&theme[num2]);
+            }
+
+            // let key = key_gen;
+            println!("{}",key_gen);
+            state.insert(key_gen.clone(), url);
+            Ok(key_gen)
+            // Err(rocket::response::status::BadRequest(Some("Emoji not implemented yet!")))
         }
 
         else {
