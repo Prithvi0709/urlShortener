@@ -53,10 +53,10 @@ fn shorten(
             // TODO: Implement mnemonic return.
             // Here the key is a string. 
             // TODO Implement a new Dashmap with <String, String> type
-            let person: [String; 6] = ["Santa ".to_string(),"The Elf ".to_string(),"Mr Snowman ".to_string(),
-                                        "The Gingerbreadman ".to_string(),"Scrooge ".to_string(),"Rudolph ".to_string()];
-            let connect: [String; 11] = ["was ".to_string(),"is ".to_string(),"likes ".to_string(),"hates ".to_string(),"prefers ".to_string(),
-                                         "has been ".to_string(),"will be ".to_string(),"adores ".to_string(),"enjoys ".to_string(),"loves ".to_string(),"dislikes ".to_string()];
+            let person: [String; 6] = ["Santa_".to_string(),"The_Elf_".to_string(),"Mr_Snowman_".to_string(),
+                                        "The_Gingerbreadman_".to_string(),"Scrooge_".to_string(),"Rudolph_".to_string()];
+            let connect: [String; 11] = ["was_".to_string(),"is_".to_string(),"likes_".to_string(),"hates_".to_string(),"prefers_".to_string(),
+                                         "has_been_".to_string(),"will_be_".to_string(),"adores_".to_string(),"enjoys_".to_string(),"loves_".to_string(),"dislikes_".to_string()];
             let action: [String; 17] = ["cooking".to_string(),"singing".to_string(),"dancing".to_string(),"sleeping".to_string(),"celebrating".to_string(),
                                         "surprising".to_string(),"writing".to_string(),"hoping".to_string(),"lying".to_string(),"listening".to_string(),"offering".to_string(),
                                         "speaking".to_string(),"running".to_string(),"programming".to_string(),"snoring".to_string(),"entertaining".to_string(),"tickling".to_string()];
