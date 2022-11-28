@@ -1,0 +1,78 @@
+html{
+    display: inline-block;
+}
+
+/* TOP NAV BAR CONTENT*/
+.navbar{
+    position: absolute;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    top:0%;
+    width:100%;
+    height: 15%;
+    
+    color: #FBEAEB;
+    background-color: #2F3C7E;
+    
+    font-family: "Rajdhani", sans-serif; 
+}
+.logo{
+    width: 125px;
+    height: 100px;
+}
+.navbar-heading{
+    padding-left: 10px;
+    font-size: 70px;
+    
+}
+
+
+
+.shortened-url{
+    position: absolute;
+    
+    width:100%;
+    
+    top:80%;
+    
+    text-align: center;
+    
+    font-size: 30px;
+}
+
+/* FOOTER CONTENT*/
+.footer{
+    
+    display: inline-block;
+    width: 100%;
+    height: 35%;
+    bottom: 0%;
+    font-family: "Rajdhani", sans-serif;
+    position: absolute;
+    bottom: 0%;
+    background-color: #FBEAEB;
+}
+.row1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left{
+    position: absolute;
+    text-align: center;
+    left:20%;
+    top:10%;
+}
+.right{
+    position: absolute;
+    text-align: center;
+    right:20%;
+    top:10%;
+}
+.row2{
+    position: absolute;
+    width: 100%;
+    bottom: 0%;
+    text-align: center;
+}

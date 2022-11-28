@@ -1,117 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Rust UrlShortner</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <head>
+      <title>Rust UrlShortner</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rajdhani">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Teko">
+      <link rel="stylesheet" href="CSS/index.css">
+      <link rel="stylesheet" href="CSS/inputbox.css">
+      <link rel="stylesheet" href="CSS/radio-buttons.css">
+      <script src="JS/function.js"></script>
 
-  <style>
-    .shorten_bar_main {
-        border-radius: 4px 0px 0px 4px;
-        font-size: 18px;
-        width:40%;
-        text-align: center;
-        font-family: "zantrokeregular";
-    }
-    .shorten_button_main {
-        border-radius: 2px 6px 6px 0px;
-        font-size: 18px;
-        padding: 3px;
-        box-shadow: none;
-        border: 1px solid rgb(163, 163, 163);
-        background-color: cornflowerblue;
-        color: rgb(255, 255, 255);
-        text-shadow: 1px 1px 1px rgb(104, 104, 104);
-        margin-left: -5px;
-        margin-top: -5px;
+       
 
-    }
-    </style>
-    <script>
-        // Wait for the DOM to load
-        document.addEventListener('DOMContentLoaded', (event) => {
-            var wage = document.getElementById("url_shtrn");
-            wage.addEventListener("keydown", function (e) {
-                if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
-                    fetch_shorten();
-                }
-            });
+    </head>
+    <body>
+         <!-- Image and text -->
+        <div class="navbar">
+            <img src="Assets/Santa_hat_with_rust.svg.png" width="90" height="90" class="logo" alt="">
+            <div class="navbar-heading">
+                URL SHORTENER
+            </div>
 
-            function fetch_shorten() {
-                var url = document.getElementById("url_shtrn").value;
+        </div>
 
-                // Frontend checks for url integrity.
-                if (url == "") {
-                    alert("Please enter a valid URL");
-                    return;
-                }   
-                if (!url.includes(".")) {
-                    alert("Please enter a valid URL");
-                    return;
-                }
-                // var translation_type = document.getElementById("translation_type").value;
-                fetch('/shorten?url='+document.getElementById('url_shtrn').value+"&translation_type=1")
-                .then((response) => response.json())
-                .then((data) => {
-                    var j = getCurrentURL() + data;
-                    document.getElementById('final_url').href = j;
-                    document.getElementById('final_url').innerHTML = j;
-                    document.getElementById('url_disp_p').style.display = "block";
-                    
-                });
+        <div class="input-form">
+            <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET" onsubmit="return false">
+                <div class="form-radio">
+                    <h3><b>Shorten type</b></h3>
+<!--
+                    <input type="radio" id="1" name="shorten_type">
+                    <label for="html">Random Number</label><br>
+                    <input type="radio" id="2" name="shorten_type">
+                    <label for="css">Mnemonic</label><br>
+                    <input type="radio" id="3" name="shorten_type">
+                    <label for="javascript">Emoji</label>
+-->
+                </div>
                 
-            }
-        })
+                	
+		
+		<div class="section over-hide z-bigger">
+			<div class="container pb-5">
+				<div class="row justify-content-center pb-5">
+					
+					<div class="col-12 pb-5">
+						<input class="checkbox-tools" type="radio" name="shorten_type" id="1">
+						<label class="for-checkbox-tools" for="1">
+							<i class='uil uil-line-alt'></i>
+							Number
+						</label><!--
+						--><input class="checkbox-tools" type="radio" name="shorten_type" id="2">
+						<label class="for-checkbox-tools" for="2">
+							<i class='uil uil-vector-square'></i>
+							Christmas
+						</label><!--
+						--><input class="checkbox-tools" type="radio" name="shorten_type" id="3">
+						<label class="for-checkbox-tools" for="3">
+							<i class='uil uil-ruler'></i>
+							Emoji
+						</label>
+					</div>
+				</div>
+			</div>	
+		</div>
+	
+		
 
-        function getCurrentURL () {
-            return window.location.href
-        }
+                
+                
+                
+            
+                <div class="form-group">
+                    <span>https://</span>
+                    <input class="form-field" type="text" id="url_shtrn" placeholder="Type URL >>> Hit Enter">
+                </div>
+            </form>
 
-    </script>
-</head>
-<body>
+            <br>
+            <div class="shortened-url" >
+                <p id="url_disp_p" style="display: none;">
+                    Success! Your Shortened Url is: 
+                    <a target="_blank" rel="noopener noreferrer" id="final_url"></a>
+                </p>
+            </div>
+            
 
-<div class="jumbotron text-center">
+        </div>
 
-    <h1>Rust Based Url Shortner</h1>
-    <h2>Quick Shorten</h2>
-    <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET" onsubmit="return false">
-        <input type="text" class="shorten_bar_main" name="url" id="url_shtrn" placeholder="Enter your url.." >
+        <div class="footer">
+            <div class="row1">
+                <div class="left">
+                  <h3><b>Features of our Shortner</b></h3>
+                  <p>Shorten URL to 3 types</p>
+                  <p>Keep Track of URL</p>
+                </div>
+            <div class="right">
+                <h3><b>Members</b></h3>
+                Samad   Prithvi   Kamal   Rishab.S  Rishab.H
+            </div>
+            </div>
+
+            <div class="row2">
+              <h3>The George Washington University</h3>        
+              <p>Dept. of Computer Science</p>
+            </div>
+
+        </div>
 
 
-
-    </form>
-    <br>
-    <p id="url_disp_p" style="display: none;">
-        Success! Your Shortened Url is: 
-        <a target="_blank" rel="noopener noreferrer" id="final_url"></a>
-    </p>
-
-</div>
-  
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <h3>Features of our Shortner</h3>
-      <p>Best shortner in the world.</p> 
-      <p>It would be stupid to use any other.</p> 
-    </div>
-    <div class="col-sm-4">
-        <h3>Members</h3>
-        <p>Samad</p>
-        <p>Prithvi</p>
-        <p>Kiran</p>
-        <p> et al.</p>
-    </div>
-    <div class="col-sm-4">
-      <h3>The George Washington University</h3>        
-      <p>Dept. of Computer Science</p>
-    </div>
-  </div>
-</div>
-
-</body>
+    </body>
 </html>
