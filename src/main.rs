@@ -7,10 +7,11 @@
 #[macro_use]
 extern crate rocket;
 mod url_validation;
-
+use rand::Rng; // Bring trait into scope.
 
 #[launch]
 fn rocket() -> _ {
+
     rocket::build()
         .manage(dashmap::DashMap::<String, String>::new())
         .mount("/", routes![
@@ -22,6 +23,8 @@ fn rocket() -> _ {
             rocket::fs::FileServer::from("static_content/")
         )
 }
+
+
 
 #[get("/shorten?<url>&<translation_type>")]
 fn shorten( 
@@ -38,8 +41,6 @@ fn shorten(
     } else {
         
         let url = url_validation::add_protocol(&url);
-        println!("URL after adding protocol: {}", url);
-        // Key converted from u32 to string
 
         if translation_type == "1" {
             use rand::Rng;
@@ -50,52 +51,42 @@ fn shorten(
         }
 
         else if translation_type == "2" {
-            // TODO: Implement mnemonic return.
-            // Here the key is a string. 
-            // TODO Implement a new Dashmap with <String, String> type
-            let person: [String; 6] = ["santa_".to_string(),"the_elf_".to_string(),"mr_snowman_".to_string(),
-                                        "the_gingerbreadman_".to_string(),"scrooge_".to_string(),"rudolph_".to_string()];
-            let connect: [String; 11] = ["was_".to_string(),"is_".to_string(),"likes_".to_string(),"hates_".to_string(),"prefers_".to_string(),
-                                         "has_been_".to_string(),"will_be_".to_string(),"adores_".to_string(),"enjoys_".to_string(),"loves_".to_string(),"dislikes_".to_string()];
-            let action: [String; 17] = ["cooking".to_string(),"singing".to_string(),"dancing".to_string(),"sleeping".to_string(),"celebrating".to_string(),
-                                        "surprising".to_string(),"writing".to_string(),"hoping".to_string(),"lying".to_string(),"listening".to_string(),"offering".to_string(),
-                                        "speaking".to_string(),"running".to_string(),"programming".to_string(),"snoring".to_string(),"entertaining".to_string(),"tickling".to_string()];
 
-            use rand::Rng;
+            let mut words: std::collections::HashMap<String, Vec<String>> = std::collections::HashMap::new();
 
-            let mut key_gen = "".to_string();
-            key_gen.push_str(&person[rand::thread_rng().gen_range(0..6)]);
-            key_gen.push_str(&connect[rand::thread_rng().gen_range(0..11)]);
-            key_gen.push_str(&action[rand::thread_rng().gen_range(0..17)]);
+            for file_name in ["conjunctions", "nouns", "verbs"].iter() {
+                let c_dir = std::env::current_dir().unwrap().to_str().unwrap().to_string();
+                let path_string = format!("{}/wordlists/themes/holidays/{}.txt", c_dir, file_name); // Improve this, use generic methods instead of hacks.
+                let file_content = std::fs::read_to_string(&path_string).expect("Path {path_string} is invalid, no such file/directory exists.");
+                let word_list_vec: Vec<String> = file_content.split("\n").map(String::from).collect();
+                words.insert( file_name.to_string() , word_list_vec );
+            }
             
 
-            // let key = key_gen;
-            println!("{}",key_gen);
-            state.insert(key_gen.clone(), url);
-            Ok(key_gen)
+            let mut _key: String = String::new();
+            for file_name in ["nouns", "conjunctions", "verbs"].iter() {
+                let k = words.get(&file_name.to_string()).unwrap();
+                _key.push_str(&k[rand::thread_rng().gen_range(0..k.len())]);
+
+            }
+            _key.pop(); // Remove the last underscore
+            state.insert(_key.clone(), url);
+            Ok(_key)
         }
 
         else if translation_type == "3" {
-            // TODO: Implement emoji return.
+            let c_dir = std::env::current_dir().unwrap().to_str().unwrap().to_string();
+            let path_string = format!("{}/wordlists/emojis/emojis.txt", c_dir); // Improve this, use generic methods instead of hacks.
+            let file_content = std::fs::read_to_string(&path_string).expect("Path {path_string} is invalid, no such file/directory exists.");
+            let emojis: Vec<String> = file_content.split("\n").map(String::from).collect();
 
-            let theme: [String; 10] = ["🙂".to_string(),"🔴".to_string(),"⚠️".to_string(),
-                                        "📌".to_string(),"😘".to_string(),"💙".to_string(),
-                                        "👽".to_string(),"👻".to_string(),"🐉".to_string(),"❤️‍🔥".to_string()];
-            
-            let mut key_gen = "".to_string();
-
-            use rand::Rng;
-            //🐼🦄
-            for _ in 0..10{
-                let num2: usize = rand::thread_rng().gen_range(0..10);
-                key_gen.push_str(&theme[num2]);
+            // Choose a random emojis
+            let mut _key: String = String::new();
+            for _ in 0..7 {
+                _key.push_str(&emojis[rand::thread_rng().gen_range(0..emojis.len())]);
             }
-
-            // let key = key_gen;
-            println!("{}",key_gen);
-            state.insert(key_gen.clone(), url);
-            Ok(key_gen)
-            // Err(rocket::response::status::BadRequest(Some("Emoji not implemented yet!")))
+            state.insert(_key.clone(), url);
+            Ok(_key)
         }
 
         else {
