@@ -1,32 +1,31 @@
-[development]
-address = "localhost"
-port = 8080
-workers = [number of cpus * 2]
-keep_alive = 5
-read_timeout = 5
-write_timeout = 5
-log = "normal"
-secret_key = [randomly generated at launch]
-limits = { forms = 32768 }
 
-[staging]
-address = "0.0.0.0"
-port = 8080
-workers = [number of cpus * 2]
-keep_alive = 5
-read_timeout = 5
-write_timeout = 5
-log = "normal"
-secret_key = [randomly generated at launch]
-limits = { forms = 32768 }
+# Except for the secret key, none of these are actually needed; Rocket has sane
+# defaults. We show all of them here explicitly for demonstrative purposes.
 
-[production]
-address = "0.0.0.0"
+[default.limits]
+forms = "64 kB"
+json = "1 MiB"
+msgpack = "2 MiB"
+"file/jpg" = "5 MiB"
+
+[default]
+key = "a default app-key"
+extra = false
+ident = "Rocket"
+
+[debug]
+address = "127.0.0.1"
 port = 8080
-workers = [number of cpus * 2]
+workers = 1
+keep_alive = 0
+log_level = "normal"
+
+[release]
+address = "127.0.0.1"
+port = 8080
+workers = 12
 keep_alive = 5
-read_timeout = 5
-write_timeout = 5
-log = "critical"
-secret_key = [randomly generated at launch]
-limits = { forms = 32768 }
+log_level = "critical"
+secret_key = "hPRYyVRiMyxpw5sBB1XeCMN1kFsDCqKvBi2tyrdsQk="
+key = "qwertyuiop"
+extra = false
