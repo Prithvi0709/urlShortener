@@ -10,7 +10,7 @@ RUN cp /urlShortener/target/release/urlShortener /urlShortener/src
 
 # EXPOSE 7000
 # EXPOSE 80
-EXPOSE 8000
+EXPOSE 8080
 
 CMD ["bash" , "-c" , "cd /urlShortener/ && cargo run --release"]
 
