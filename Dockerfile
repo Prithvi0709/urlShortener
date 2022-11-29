@@ -2,7 +2,6 @@ FROM rust as build
 
 
 # Pull our Repo
-# RUN git clone https://github.com/Prithvi0709/urlShortener.git
 # RUN git checkout master/
 # Build our Project
 
