@@ -6,7 +6,12 @@ RUN git clone https://github.com/Prithvi0709/urlShortener.git
 
 # Build our Project
 RUN cd urlShortener && cargo build --release
-RUN cd ../
+RUN cp /urlShortener/target/release/urlShortener /urlShortener/src
 
+# EXPOSE 7000
+# EXPOSE 80
+EXPOSE 8000
 
-CMD ["cd urlShortener && cargo run"]
+CMD ["bash" , "-c" , "cd /urlShortener/ && cargo run --release"]
+
+# CMD ["cd /urlShortener && cargo run"]
