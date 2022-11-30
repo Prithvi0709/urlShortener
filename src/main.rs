@@ -158,16 +158,6 @@ fn redirect<>(
         },
         None => Err(rocket::response::status::NotFound( "Reload the page.".to_string() ) )//format!( "Key is: {} and state is: {:?}" ,  key.clone() , state)  )),
     }
-    // datum.count += 1;
-
-    // datum.url
-    
-    // println!("Done adding tracker stats");
-    // state
-    //     .get(&key)
-    //     .map(|tstruct| rocket::response::Redirect::to(tstruct.url.clone()))
-    //     .ok_or(rocket::response::status::NotFound("Invalid or expired link!"))
-
     
 }
 
