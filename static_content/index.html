@@ -18,9 +18,10 @@
           
         function Copy() {
             var Url = document.getElementById("final_url");
-            Url.select();
-            Url.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(Url.value);
+            // Url.select();
+            // Url.setSelectionRange(0, 99999);
+            console.log(Url.innerHTML)
+            navigator.clipboard.writeText(Url.innerHTML);
         }
         
         
