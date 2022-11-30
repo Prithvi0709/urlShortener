@@ -9,6 +9,7 @@ extern crate rocket;
 mod url_validation;
 use rand::Rng; // Bring trait into scope.
 
+#[derive(Debug)]
 struct TrackerStruct {
     url: String,
     count: u32,
@@ -132,19 +133,19 @@ fn shorten<>(
 fn redirect<>(
     key: String,
     state: & rocket::State<dashmap::DashMap<String, TrackerStruct>>,
-) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<& str>> {
+) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<String>> {
     // TODO: Implement click tracking here.
     println!("Entering Redirect");
     
     // Increase the count forthe key
-    let datum = state.get_mut(&key);
+    let datum = state.get_mut(&key.clone());
 
     match datum {
         Some(mut datum) => {
             datum.count += 1;
             Ok(rocket::response::Redirect::to(datum.url.to_string()))
         },
-        None => Err(rocket::response::status::NotFound("Key not found!")),
+        None => Err(rocket::response::status::NotFound( format!( "Key is: {} and state is: {:?}" ,  key.clone() , state)  )),
     }
     // datum.count += 1;
 
