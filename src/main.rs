@@ -9,11 +9,22 @@ extern crate rocket;
 mod url_validation;
 use rand::Rng; // Bring trait into scope.
 
-#[derive(Debug)]
+
+// #[derive(Debug)]
 struct TrackerStruct {
     url: String,
     count: u32,
 }
+
+use std::fmt;
+
+impl fmt::Display for TrackerStruct
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "URL: {}, Count: {}", self.url, self.count)
+    }
+}
+
 
 #[launch]
 fn rocket() -> _ {
