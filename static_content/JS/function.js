@@ -8,8 +8,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
             });
 
+
             var tracker = document.getElementById("url_track");
-            wage.addEventListener("keydown", function (e) {
+            tracker.addEventListener("keydown", function (e) {
                 if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
                     track();
                 }
@@ -57,7 +58,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 
                 var extracted_key = keyExtraction(url);
 
-                fetch('/track?<hkey>='+extracted_key)
+                fetch('/track?hkey='+extracted_key)
                 .then((response) => response.text())
                 .then((data) => {
                     var track_info = data.split('prithviandsamadandkamal')
@@ -90,6 +91,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         function keyExtraction(url){
             const array = url.split('/')
-            var key = array[array.length()-1]
+            var key = array[array.length-1]
             return key
         }
