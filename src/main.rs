@@ -145,7 +145,7 @@ fn redirect<>(
             datum.count += 1;
             Ok(rocket::response::Redirect::to(datum.url.to_string()))
         },
-        None => Err(rocket::response::status::NotFound( format!( "Key is: {} and state is: {:?}" ,  key.clone() , state)  )),
+        None => Err(rocket::response::status::NotFound( "Reload the page.".to_string() ) )//format!( "Key is: {} and state is: {:?}" ,  key.clone() , state)  )),
     }
     // datum.count += 1;
 
