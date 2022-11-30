@@ -31,12 +31,12 @@ html{
     
     position:absolute;
     font-family: "Rajdhani", sans-serif;
-    top:75%;
-    left:17%;
+    top:77%;
+    left:19%;
     
 }
 .tracker > h3{
-    font-size:40px;
+    font-size:30px;
 }
 
 .track-url{
