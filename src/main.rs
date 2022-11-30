@@ -54,13 +54,14 @@ fn shorten<'a>(
         if translation_type == "1" {
             use rand::Rng;
             let key: u32 = rand::thread_rng().gen();
-            state.insert(key.to_string(), url.clone());
+            
             
             let datum = tracker_s {
                 id: url.clone(),
                 count: 0,
             };
             tracker.insert(key.to_string(), datum);
+            state.insert(key.to_string(), url.clone());
             
             
             // println!("{}",key);
@@ -86,15 +87,16 @@ fn shorten<'a>(
                 _key.push_str(&k[rand::thread_rng().gen_range(0..k.len())]);
 
             }
-            _key.pop(); // Remove the last underscore
-            state.insert(_key.clone(), url.clone() );
-            
+
             let datum = tracker_s {
                 id: url.to_string().clone(),
                 count: 0,
             };
-            tracker.insert(_key.to_string(), datum);
+            tracker.insert(_key.to_string().clone(), datum);
             
+            state.insert(_key.clone(), url.clone() );
+            
+
             
             Ok(_key)
         }
@@ -110,12 +112,16 @@ fn shorten<'a>(
             for _ in 0..7 {
                 _key.push_str(&emojis[rand::thread_rng().gen_range(0..emojis.len())]);
             }
-            state.insert(_key.clone(), url.clone());
+
             let datum = tracker_s {
                 id: url.to_string().clone(),
                 count: 0,
             };
             tracker.insert(_key.to_string(), datum);
+
+            
+            state.insert(_key.clone(), url.clone());
+
             Ok(_key)
         }
 
