@@ -135,7 +135,7 @@ fn redirect<'a>(
     tracker: &'a rocket::State< dashmap::DashMap::<String, tracker_s> >,
 ) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<&'a str>> {
     // TODO: Implement click tracking here.
-    println!("Enetring Redirect");
+    println!("Entering Redirect");
     
     // Increase the count forthe key
     let mut datum = tracker.get_mut(&key).unwrap();
@@ -163,7 +163,7 @@ fn track<'a>(
     else {
         let stats = stats.unwrap();
         let stats = stats.value();
-        let stats = format!("{{\"id\": \"{}\", \"count\": \"{}\"}}", stats.id, stats.count);
+        let stats = format!("{}prithviandsamadandkamal{}", stats.id, stats.count);
         Ok(stats)
     }
 }

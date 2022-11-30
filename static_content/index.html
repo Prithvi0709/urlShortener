@@ -31,14 +31,6 @@
             <form enctype="application/x-www-form-urlencoded" action="/shorten" method="GET" onsubmit="return false">
                 <div class="form-radio">
                     <h3><b>Shorten type</b></h3>
-<!--
-                    <input type="radio" id="1" name="shorten_type">
-                    <label for="html">Random Number</label><br>
-                    <input type="radio" id="2" name="shorten_type">
-                    <label for="css">Mnemonic</label><br>
-                    <input type="radio" id="3" name="shorten_type">
-                    <label for="javascript">Emoji</label>
--->
                 </div>
                 
                 	
@@ -88,7 +80,23 @@
                 </p>
             </div>
             
-
+            <div class = "tracker">
+                <h3><b>Track a URL:</b></h3>
+            </div>
+            <form enctype="application/x-www-form-urlencoded" action="/track" method="GET" onsubmit="return false">
+                <div class="track-group">
+                        <input class="track-field" type="text" id="url_track" placeholder="Type URL >>> Hit Enter">
+                </div>
+            </form>
+            <div class="track-url" >
+                <div id="count_display_div" style="display: none;">
+                    No of Clicks: 
+                    <p id="count"></p>
+                    Website:
+                    <p id="web_name"></p>
+                </div>
+            </div>
+            
         </div>
 
         <div class="footer">

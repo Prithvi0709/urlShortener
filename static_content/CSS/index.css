@@ -27,6 +27,115 @@ html{
     
 }
 
+.tracker{
+    
+    position:absolute;
+    font-family: "Rajdhani", sans-serif;
+    top:75%;
+    left:17%;
+    
+}
+.tracker > h3{
+    font-size:40px;
+}
+
+.track-url{
+    
+    font-family: "Rajdhani", sans-serif;
+    position: absolute;
+    
+    width:100%;
+    
+    top:95%;
+    
+    text-align: center;
+    
+    font-size: 25px;
+}
+
+:root {
+	 --input-color: #99a3ba;
+	 --input-border: #cdd9ed;
+	 --input-background: #fff;
+	 --input-placeholder: #cbd1dc;
+	 --input-border-focus: #275efe;
+	 --group-color: var(--input-color);
+	 --group-border: var(--input-border);
+	 --group-background: #eef4ff;
+	 --group-color-focus: #fff;
+	 --group-border-focus: var(--input-border-focus);
+	 --group-background-focus: #678efe;
+}
+ .track-field {
+	 display: block;
+     width: 100%;
+     padding: 8px 16px;
+	 line-height: 25px;
+	 font-size: 14px;
+	 font-weight: 500;
+	 font-family: inherit;
+	 border-radius: 6px;
+	 -webkit-appearance: none;
+	 color: var(--input-color);
+	 border: 1px solid var(--input-border);
+	 background: var(--input-background);
+	 transition: border 0.3s ease;
+}
+ .track-field::placeholder {
+	 color: var(--input-placeholder);
+}
+ .track-field:focus {
+	 outline: none;
+	 border-color: var(--input-border-focus);
+}
+ .track-group {
+	 position: absolute;
+     left:30%;
+     top:80.5%;
+	 display: flex;
+	 width: 40%;
+     font-family: "Rajdhani", sans-serif;
+}
+ .track-group > span, .track-group .track-field {
+	 white-space: nowrap;
+	 display: block;
+}
+ .track-group > span:not(:first-child):not(:last-child), .track-group .track-field:not(:first-child):not(:last-child) {
+	 border-radius: 0;
+}
+ .track-group > span:first-child, .track-group .track-field:first-child {
+	 border-radius: 6px 0 0 6px;
+}
+ .track-group > span:last-child, .track-group .track-field:last-child {
+	 border-radius: 0 6px 6px 0;
+}
+ .track-group > span:not(:first-child), .track-group .track-field:not(:first-child) {
+	 margin-left: -1px;
+}
+ .track-group .track-field {
+	 position: relative;
+	 z-index: 1;
+	 flex: 1 1 auto;
+	 width: 1%;
+	 margin-top: 0;
+	 margin-bottom: 0;
+}
+ .track-group > span {
+	 text-align: center;
+	 padding: 8px 12px;
+	 font-size: 14px;
+	 line-height: 25px;
+	 color: var(--group-color);
+	 background: var(--group-background);
+	 border: 1px solid var(--group-border);
+	 transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
+ .track-group:focus-within > span {
+	 color: var(--group-color-focus);
+	 background: var(--group-background-focus);
+	 border-color: var(--group-border-focus);
+}
+
 
 
 .shortened-url{
@@ -34,11 +143,11 @@ html{
     
     width:100%;
     
-    top:80%;
+    top:60%;
     
     text-align: center;
     
-    font-size: 30px;
+    font-size: 25px;
 }
 
 /* FOOTER CONTENT*/
@@ -46,7 +155,7 @@ html{
     
     display: inline-block;
     width: 100%;
-    height: 35%;
+    height: 25%;
     bottom: 0%;
     font-family: "Rajdhani", sans-serif;
     position: absolute;
@@ -75,4 +184,9 @@ html{
     width: 100%;
     bottom: 0%;
     text-align: center;
+    font-size:10px;
+}
+.row2 > h3
+{
+    font-size: 15px;
 }
