@@ -90,7 +90,7 @@ fn shorten<'a>(
             state.insert(_key.clone(), url.clone() );
             
             let datum = tracker_s {
-                id: _key.to_string().clone(),
+                id: url.to_string().clone(),
                 count: 0,
             };
             tracker.insert(_key.to_string(), datum);
@@ -112,7 +112,7 @@ fn shorten<'a>(
             }
             state.insert(_key.clone(), url.clone());
             let datum = tracker_s {
-                id: _key.to_string().clone(),
+                id: url.to_string().clone(),
                 count: 0,
             };
             tracker.insert(_key.to_string(), datum);
