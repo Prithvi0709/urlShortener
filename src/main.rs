@@ -5,7 +5,7 @@
 */
 
 #[macro_use]
-extern crate rocket;
+extern crate rocket; ///     |||||||||||||||||||||||||| ROCKET ||||||||||||||||||
 mod url_validation;
 use rand::Rng; // Bring trait into scope.
 
@@ -16,6 +16,9 @@ struct TrackerStruct {
     count: u32,
 }
 
+
+
+/// ||||||||||||||||||||||||              TRAITS THING  ||||||||||||||||||||||||||||||||||||
 use std::fmt;
 
 impl fmt::Display for TrackerStruct
@@ -30,7 +33,7 @@ impl fmt::Display for TrackerStruct
 fn rocket() -> _ {
 
     rocket::build()
-        .manage(dashmap::DashMap::<String, TrackerStruct>::new())
+        .manage(dashmap::DashMap::<String, TrackerStruct>::new()) // |||||||||||||||||||||||    DASHMAP |||||||||||||||||||||||
         .mount("/", routes![
             shorten,
             redirect,
@@ -49,13 +52,13 @@ fn shorten<>(
         url: String,
         translation_type : String,
         state: & rocket::State<dashmap::DashMap<String, TrackerStruct>>,
-    ) -> Result<String, rocket::response::status::BadRequest<& str>> {
+    ) -> Result<String, rocket::response::status::BadRequest<& str>> { // |||||||||||||||||||||||||||||||||||||||||||||| MONADS |||||||||||||||\\\\\\\
 
     if url.is_empty() {
         Err(rocket::response::status::BadRequest(Some("URL is empty!")))
     
     } else if url_validation::period_in_url(&url) == false {
-        Err(rocket::response::status::BadRequest(Some("URL is invalid!")))
+        Err(rocket::response::status::BadRequest(Some("URL is invalid!"))) // ||||||||||| ERROR ||||||||||||||||||||||||
     
     } else {
         
@@ -73,7 +76,7 @@ fn shorten<>(
 
             state.insert(key.to_string(), datum  );
             
-            Ok(key.to_string())
+            Ok(key.to_string()) // ||||||||||||||||||||||||||||    SOME (T) THINGY ||||||||||||||||||||||||||||||||||||
         }
 
         else if translation_type == "2" {
@@ -109,6 +112,8 @@ fn shorten<>(
         }
 
         else if translation_type == "3" {
+
+            // ||||||||||||||||||||||||||  EMOJI USE |||||||||||||||||||||||||||||||||||||||||||||||||||
             let c_dir = std::env::current_dir().unwrap().to_str().unwrap().to_string();
             let path_string = format!("{}/wordlists/emojis/emojis.txt", c_dir); // Improve this, use generic methods instead of hacks.
             let file_content = std::fs::read_to_string(&path_string).expect("Path {path_string} is invalid, no such file/directory exists.");

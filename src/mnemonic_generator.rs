@@ -10,3 +10,9 @@ pub fn generate_random_string() -> Option<String> {
 
     Some(string)
 }
+
+
+/*
+    for i in  {1..100}; do curl -I 0.0.0.0:8080; done;
+    for i in  {1..100}; do curl -I https://86b6-161-253-74-219.ngrok.io
+ */
