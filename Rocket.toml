@@ -3,10 +3,10 @@
 # defaults. We show all of them here explicitly for demonstrative purposes.
 
 [default.limits]
-forms = "64 kB"
-json = "1 MiB"
-msgpack = "2 MiB"
-"file/jpg" = "5 MiB"
+forms = "640 kB"
+json = "10 MiB"
+msgpack = "20 MiB"
+"file/jpg" = "50 MiB"
 
 [default]
 key = "a default app-key"
@@ -16,14 +16,14 @@ ident = "Rocket"
 [debug]
 address = "0.0.0.0"
 port = 8080
-workers = 2
+workers = 7
 keep_alive = 0
 log_level = "normal"
 
 [release]
 address = "0.0.0.0"
 port = 8080
-workers = 2
+workers = 7
 keep_alive = 5
 log_level = "critical"
 secret_key = "hPRYyVRiMyxpw5sBB1XeCMN1kFsDCqKvBi2tyrdsQk="

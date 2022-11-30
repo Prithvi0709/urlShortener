@@ -17,11 +17,10 @@
       <script>
           
         function Copy() {
-          var Url = document.getElementById("final_url");
-          Url_value = Url.innerHTML;
-          console.log(Url.innerHTML)
-          Url_value.select();
-          document.execCommand("copy")
+            var Url = document.getElementById("final_url");
+            Url.select();
+            Url.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(Url.value);
         }
         
         
@@ -86,9 +85,9 @@
 
             <br>
             <div class="shortened-url" >
-                <p id="url_disp_p" style="display: block;">
+                <p id="url_disp_p" style="display: none;">
                     Success! Your Shortened Url is: 
-                    <a target="_blank" rel="noopener noreferrer" id="final_url">fgdsfgdsfgsdfgdsfg</a>
+                    <a target="_blank" rel="noopener noreferrer" id="final_url"></a>
                 
                     <input class="copy_button" type="button" value="Copy Url" onclick="Copy()" />
                     
