@@ -9,8 +9,8 @@ extern crate rocket;
 mod url_validation;
 use rand::Rng; // Bring trait into scope.
 
-struct tracker_s {
-    id: String,
+struct TrackerStruct {
+    url: String,
     count: u32,
 }
 
@@ -18,8 +18,7 @@ struct tracker_s {
 fn rocket() -> _ {
 
     rocket::build()
-        .manage(dashmap::DashMap::<String, String>::new())
-        .manage(dashmap::DashMap::<String, tracker_s >::new())
+        .manage(dashmap::DashMap::<String, TrackerStruct>::new())
         .mount("/", routes![
             shorten,
             redirect,
@@ -34,12 +33,11 @@ fn rocket() -> _ {
 
 
 #[get("/shorten?<url>&<translation_type>")]
-fn shorten<'a>( 
+fn shorten<>( 
         url: String,
         translation_type : String,
-        state: &'a rocket::State<dashmap::DashMap<String, String>>,
-        tracker: &'a rocket::State< dashmap::DashMap::<String, tracker_s> >,
-    ) -> Result<String, rocket::response::status::BadRequest<&'a str>> {
+        state: & rocket::State<dashmap::DashMap<String, TrackerStruct>>,
+    ) -> Result<String, rocket::response::status::BadRequest<& str>> {
 
     if url.is_empty() {
         Err(rocket::response::status::BadRequest(Some("URL is empty!")))
@@ -56,15 +54,13 @@ fn shorten<'a>(
             let key: u32 = rand::thread_rng().gen();
             
             
-            let datum = tracker_s {
-                id: url.clone(),
+            let datum = TrackerStruct {
+                url: url.clone(),
                 count: 0,
             };
-            tracker.insert(key.to_string(), datum);
-            state.insert(key.to_string(), url.clone());
+
+            state.insert(key.to_string(), datum  );
             
-            
-            // println!("{}",key);
             Ok(key.to_string())
         }
 
@@ -88,13 +84,12 @@ fn shorten<'a>(
 
             }
 
-            let datum = tracker_s {
-                id: url.to_string().clone(),
+            let datum = TrackerStruct {
+                url: url.to_string().clone(),
                 count: 0,
             };
-            tracker.insert(_key.to_string().clone(), datum);
             
-            state.insert(_key.clone(), url.clone() );
+            state.insert(_key.clone(), datum  );
             
 
             
@@ -113,14 +108,13 @@ fn shorten<'a>(
                 _key.push_str(&emojis[rand::thread_rng().gen_range(0..emojis.len())]);
             }
 
-            let datum = tracker_s {
-                id: url.to_string().clone(),
+            let datum = TrackerStruct {
+                url: url.to_string().clone(),
                 count: 0,
             };
-            tracker.insert(_key.to_string(), datum);
 
             
-            state.insert(_key.clone(), url.clone());
+            state.insert(_key.clone(), datum );
 
             Ok(_key)
         }
@@ -135,41 +129,52 @@ fn shorten<'a>(
 // Add Api for login and register, so that user can add a custom url
 
 #[get("/<key>")]
-fn redirect<'a>(
+fn redirect<>(
     key: String,
-    state: &'a rocket::State<dashmap::DashMap<String,String>>,
-    tracker: &'a rocket::State< dashmap::DashMap::<String, tracker_s> >,
-) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<&'a str>> {
+    state: & rocket::State<dashmap::DashMap<String, TrackerStruct>>,
+) -> Result<rocket::response::Redirect, rocket::response::status::NotFound<& str>> {
     // TODO: Implement click tracking here.
     println!("Entering Redirect");
     
     // Increase the count forthe key
-    let mut datum = tracker.get_mut(&key).unwrap();
-    datum.count += 1;
+    let datum = state.get_mut(&key);
+
+    match datum {
+        Some(mut datum) => {
+            datum.count += 1;
+            Ok(rocket::response::Redirect::to(datum.url.to_string()))
+        },
+        None => Err(rocket::response::status::NotFound("Key not found!")),
+    }
+    // datum.count += 1;
+
+    // datum.url
     
-    println!("Done adding tracker stats");
-    state
-        .get(&key)
-        .map(|url| rocket::response::Redirect::to(url.clone()))
-        .ok_or(rocket::response::status::NotFound("Invalid or expired link!"))
+    // println!("Done adding tracker stats");
+    // state
+    //     .get(&key)
+    //     .map(|tstruct| rocket::response::Redirect::to(tstruct.url.clone()))
+    //     .ok_or(rocket::response::status::NotFound("Invalid or expired link!"))
+
+    
 }
 
 
 #[get("/track?<hkey>")]
-fn track<'a>(
+fn track<>(
     hkey: String,
-    tracker: &'a rocket::State< dashmap::DashMap::<String, tracker_s> >,
-) -> Result<String, rocket::response::status::BadRequest<&'a str>> {
+    state: & rocket::State< dashmap::DashMap::<String, TrackerStruct> >,
+) -> Result<String, rocket::response::status::BadRequest<& str>> {
 
 
-    let stats = tracker.get(&hkey);
+    let stats = state.get(&hkey);
     if stats.is_none() {
         Err(rocket::response::status::BadRequest(Some("Invalid or expired link!")))
     }
     else {
         let stats = stats.unwrap();
         let stats = stats.value();
-        let stats = format!("{}prithviandsamadandkamal{}", stats.id, stats.count);
+        let stats = format!("{}prithviandsamadandkamal{}", stats.url, stats.count);
         Ok(stats)
     }
 }
