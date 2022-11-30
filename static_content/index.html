@@ -14,7 +14,18 @@
       <link rel="stylesheet" href="CSS/inputbox.css">
       <link rel="stylesheet" href="CSS/radio-buttons.css">
       <script src="JS/function.js"></script>
-
+      <script>
+          
+        function Copy() {
+          var Url = document.getElementById("final_url");
+          Url_value = Url.innerHTML;
+          console.log(Url.innerHTML)
+          Url_value.select();
+          document.execCommand("copy")
+        }
+        
+        
+      </script>
        
 
     </head>
@@ -75,10 +86,15 @@
 
             <br>
             <div class="shortened-url" >
-                <p id="url_disp_p" style="display: none;">
+                <p id="url_disp_p" style="display: block;">
                     Success! Your Shortened Url is: 
-                    <a target="_blank" rel="noopener noreferrer" id="final_url"></a>
+                    <a target="_blank" rel="noopener noreferrer" id="final_url">fgdsfgdsfgsdfgdsfg</a>
+                
+                    <input class="copy_button" type="button" value="Copy Url" onclick="Copy()" />
+                    
+
                 </p>
+                
             </div>
             
             <div class = "tracker">
