@@ -18,7 +18,7 @@ struct TrackerStruct {
 
 
 
-/// ||||||||||||||||||||||||              TRAITS THING  ||||||||||||||||||||||||||||||||||||
+/// ||||||||||||||||||||||||    TRAITS THING  ||||||||||||||||||||||||||||||||||||
 use std::fmt;
 
 impl fmt::Display for TrackerStruct
@@ -28,6 +28,12 @@ impl fmt::Display for TrackerStruct
     }
 }
 
+impl fmt::Debug for TrackerStruct
+{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "URL: {}, Count: {}", self.url, self.count)
+    }
+}
 
 #[launch]
 fn rocket() -> _ {
@@ -38,6 +44,7 @@ fn rocket() -> _ {
             shorten,
             redirect,
             track,
+            state_map,
         ])
         .mount(
             "/",
@@ -142,6 +149,57 @@ fn shorten<>(
     }
 }
 
+
+
+#[get("/state")]
+fn state_map (
+    state: &rocket::State<dashmap::DashMap<String, TrackerStruct>>,
+) -> rocket::response::content::RawHtml<String> {
+    
+    let mut html_ = String::new();
+
+    html_.push_str("
+    <html>
+    <head>
+    <title>State Map</title>
+    <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+    </style>
+    </head>
+    <body>
+    <h1 align=\"center\">State Map</h1>
+    <br>
+    <table align=\"center\" style=\"width:60%; border: 1px solid black;text-align: center;\">
+    <tr> 
+    <th> Key </th>
+    <th> Request Count </th>
+    <th> Redirect Uri </th>
+    </tr>
+    ");
+    
+    let ref__ = state.clone();
+    
+    for _keys in ref__.iter() {
+    
+        html_.push_str(
+            format!(
+                "<tr> <td> {} </td>  <td> {} </td> <td> <a href=\"{}\"> {} </a> </td> ",
+                _keys.key(),
+                state.get ( _keys.key() ).unwrap().count,
+                state.get ( _keys.key() ).unwrap().url,
+                state.get ( _keys.key() ).unwrap().url,
+        ).as_str());
+    
+    }
+
+    html_.push_str("</table></body></html>");
+    
+    rocket::response::content::RawHtml( html_ )
+}
 
 // Add Api for login and register, so that user can add a custom url
 
